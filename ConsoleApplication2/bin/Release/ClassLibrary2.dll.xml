@@ -1,0 +1,11 @@
+﻿<?xml version="1.0" encoding="utf-8"?><dll><dllFileName>ClassLibrary2.dll.xml</dllFileName><fullyQualifiedPath>c:\playdll\ClassLibrary2.dll</fullyQualifiedPath><isManaged>True</isManaged><userSelectedClassesInDll><class>
+  <className>ImagineaSampleDLL_ImagineaSampleClassOne</className>
+  <methods>
+    <method>
+  <methodName>sayHello</methodName>
+  <methodReturnType>System.Void</methodReturnType>
+  <numberOfParameters>0</numberOfParameters>
+  <parameters />
+</method>
+  </methods>
+</class></userSelectedClassesInDll></dll>

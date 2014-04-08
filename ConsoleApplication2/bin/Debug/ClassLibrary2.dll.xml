@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8"?><dll><dllFileName>ClassLibrary2.dll.xml</dllFileName><fullyQualifiedPath>c:\playdll\ClassLibrary2.dll</fullyQualifiedPath><isManaged>True</isManaged><userSelectedClassesInDll><class>
+  <className>ImagineaSampleDLL_ImagineaSampleClassOne</className>
+  <methods>
+    <method>
+  <methodName>returnSameObject</methodName>
+  <methodReturnType>ImagineaSampleDLL.ImagineaSampleClassTwo</methodReturnType>
+  <numberOfParameters>1</numberOfParameters>
+  <parameters>
+    <parameter>
+  <parameterName>sampleClassTwoTO</parameterName>
+  <positionOfParameter>1</positionOfParameter>
+  <parameterType>System.String</parameterType>
+</parameter>
+  </parameters>
+</method>
+  </methods>
+</class></userSelectedClassesInDll></dll>

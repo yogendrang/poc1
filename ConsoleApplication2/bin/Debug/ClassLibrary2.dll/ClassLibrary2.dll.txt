@@ -1,0 +1,19 @@
+using System.IO;
+using System;
+using Newtonsoft.Json;
+using System.Web.Http;
+namespace ClassLibrary2.dll {
+public class  ImagineaSampleDLL_ImagineaSampleClassOneController : ApiController {
+public string GetreturnSameObject (System.String sampleClassTwoTO){
+string assemblyName = "c:\\playdll\\ClassLibrary2.dll";string className = "ImagineaSampleDLL.ImagineaSampleClassOne";
+System.Reflection.Assembly assembly =System.Reflection.Assembly.LoadFile(assemblyName);
+System.Type type = assembly.GetType(className);
+string methodName = "returnSameObject";
+object classInstance =  System.Activator.CreateInstance(type);
+System.Reflection.MethodInfo methodInfo = type.GetMethod(methodName);
+object result = methodInfo.Invoke(classInstance,new object[] {sampleClassTwoTO});
+string json = JsonConvert.SerializeObject(result);
+return json;
+}
+}
+}

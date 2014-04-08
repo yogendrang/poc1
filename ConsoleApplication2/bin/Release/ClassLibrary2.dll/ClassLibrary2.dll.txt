@@ -1,0 +1,42 @@
+using System.IO;
+using System;
+using Newtonsoft;
+using Newtonsoft.Json;
+using System.Web.Http;
+namespace ClassLibrary2.dll {
+public class  ImagineaSampleDLL_ImagineaSampleClassOneController : ApiController {
+public string GetreturnObjectBack (System.Int32 aNumberToSqaure){
+string assemblyName = "c:\\playdll\\ClassLibrary2.dll";string className = "ImagineaSampleDLL.ImagineaSampleClassOne";
+System.Reflection.Assembly assembly =System.Reflection.Assembly.LoadFile(assemblyName);
+System.Type type = assembly.GetType(className);
+string methodName = "returnObjectBack";
+object classInstance =  System.Activator.CreateInstance(type);
+System.Reflection.MethodInfo methodInfo = type.GetMethod(methodName);
+object result = methodInfo.Invoke(classInstance,new object[] {aNumberToSqaure});
+string json = JsonConvert.SerializeObject(result);
+return json;
+}
+public void GetsayHello (){
+string assemblyName = "c:\\playdll\\ClassLibrary2.dll";string className = "ImagineaSampleDLL.ImagineaSampleClassOne";
+System.Reflection.Assembly assembly =System.Reflection.Assembly.LoadFile(assemblyName);
+System.Type type = assembly.GetType(className);
+string methodName = "sayHello";
+object classInstance =  System.Activator.CreateInstance(type);
+System.Reflection.MethodInfo methodInfo = type.GetMethod(methodName);
+object result = methodInfo.Invoke(classInstance, null);
+}
+}
+public class  ImagineaSampleDLL_ImagineaSampleClassTwoController : ApiController {
+public string GetreturnSquareOfNumber (System.Int32 theNumberToReturn){
+string assemblyName = "c:\\playdll\\ClassLibrary2.dll";string className = "ImagineaSampleDLL.ImagineaSampleClassTwo";
+System.Reflection.Assembly assembly =System.Reflection.Assembly.LoadFile(assemblyName);
+System.Type type = assembly.GetType(className);
+string methodName = "returnSquareOfNumber";
+object classInstance =  System.Activator.CreateInstance(type);
+System.Reflection.MethodInfo methodInfo = type.GetMethod(methodName);
+object result = methodInfo.Invoke(classInstance,new object[] {theNumberToReturn});
+string json = JsonConvert.SerializeObject(result);
+return json;
+}
+}
+}

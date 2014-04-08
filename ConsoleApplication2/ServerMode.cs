@@ -1,0 +1,102 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Reflection;
+
+using System.Net.Http;
+using System.ServiceModel;
+using System.Web.Http;
+using System.Web.Http.Dispatcher;
+using System.Web.Http.SelfHost;
+using System.Configuration;
+using ConsoleApplication2.Models;
+using ConsoleApplication2.Processor;
+using ConsoleApplication2.Generators;
+
+
+namespace ConsoleApplication2
+{
+    class ServerMode
+    {
+        static readonly Uri _baseAddress = new Uri("http://localhost:60064");
+
+        public static Assembly generatedAssemblyAtHand;
+
+        public static void doConfigurationAndServerStartup()
+        {
+            Console.WriteLine("In server mode");
+            string dllPath = ConfigurationManager.AppSettings["dllFilePath"];
+            Console.WriteLine("DLL File is : " + dllPath);
+            Models.DLLModel dLLAtHand = null;
+            if (dllPath != null && dllPath.EndsWith(".dll"))
+            {
+                dLLAtHand = new DLLModel(dllPath);
+                dLLAtHand = dLLAtHand.processDll(dLLAtHand);
+            }
+            else
+            {
+                Console.WriteLine("DLL Path information is not properly configured.");
+                Environment.Exit(0);
+            }
+
+            DLLProcessor.populateUserSelectedClassesAndMethods(dLLAtHand);
+            Assembly assemblyAtHand = new ControllerGenerator().generateControllersAndDll(dLLAtHand);
+            if (assemblyAtHand != null)
+            {
+                generatedAssemblyAtHand = assemblyAtHand;
+                dLLAtHand.generateXml();
+                startServer();
+            }
+
+        }
+
+       
+
+        public static void startServer()
+        {
+            HttpSelfHostServer server = null;
+            try
+            {
+                // Set up server configuration
+                HttpSelfHostConfiguration config = new HttpSelfHostConfiguration(_baseAddress);
+                config.HostNameComparisonMode = HostNameComparisonMode.Exact;
+                config.Routes.MapHttpRoute(
+                 name: "Api default",
+                 routeTemplate: "api/{controller}/{id}",
+                 defaults: new { id = RouteParameter.Optional }
+                );
+
+                DynamicAssemblyResolver assemblyResolver = new DynamicAssemblyResolver();
+                config.Services.Replace(typeof(IAssembliesResolver), assemblyResolver);
+                Console.WriteLine("Passing...%%%%%%%%");
+                // Create server
+                server = new HttpSelfHostServer(config);
+                // Start listening
+                server.OpenAsync().Wait();
+                Console.WriteLine("Listening on " + _baseAddress);
+                while (true)
+                {
+                    // Run HttpClient issuing requests
+                    Console.WriteLine("Press Ctrl+C to exit...");
+                    Console.ReadLine();
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("Could not start server: {0}", e.GetBaseException().Message);
+                Console.WriteLine("Hit ENTER to exit...");
+                Console.ReadLine();
+            }
+            finally
+            {
+                if (server != null)
+                {
+                    // Stop listening
+                    server.CloseAsync().Wait();
+                }
+            }
+        }
+    }
+}
