@@ -2,12 +2,12 @@
   <className>ImagineaSampleDLL_ImagineaSampleClassOne</className>
   <methods>
     <method>
-  <methodName>returnSameObject</methodName>
-  <methodReturnType>ImagineaSampleDLL.ImagineaSampleClassTwo</methodReturnType>
+  <methodName>returnObjectBackTrial</methodName>
+  <methodReturnType>ImagineaSampleDLL.ImagineaSampleClassThree</methodReturnType>
   <numberOfParameters>1</numberOfParameters>
   <parameters>
     <parameter>
-  <parameterName>sampleClassTwoTO</parameterName>
+  <parameterName>objectAtHandTO</parameterName>
   <positionOfParameter>1</positionOfParameter>
   <parameterType>System.String</parameterType>
 </parameter>

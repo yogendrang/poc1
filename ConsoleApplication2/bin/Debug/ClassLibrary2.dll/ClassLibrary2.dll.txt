@@ -4,14 +4,16 @@ using Newtonsoft.Json;
 using System.Web.Http;
 namespace ClassLibrary2.dll {
 public class  ImagineaSampleDLL_ImagineaSampleClassOneController : ApiController {
-public string GetreturnSameObject (System.String sampleClassTwoTO){
-string assemblyName = "c:\\playdll\\ClassLibrary2.dll";string className = "ImagineaSampleDLL.ImagineaSampleClassOne";
+public string GetreturnObjectBackTrial (string objectAtHandTO){
+string assemblyName = "c:\\playdll\\ClassLibrary2.dll";object objectAtHandTOAsObj
+ = CoreFramework.ObjectProcessor.prepCompTypeForInvocation("ClassLibrary2.dll","ImagineaSampleDLL.ImagineaSampleClassThree",objectAtHandTO);
+string className = "ImagineaSampleDLL.ImagineaSampleClassOne";
 System.Reflection.Assembly assembly =System.Reflection.Assembly.LoadFile(assemblyName);
 System.Type type = assembly.GetType(className);
-string methodName = "returnSameObject";
+string methodName = "returnObjectBackTrial";
 object classInstance =  System.Activator.CreateInstance(type);
 System.Reflection.MethodInfo methodInfo = type.GetMethod(methodName);
-object result = methodInfo.Invoke(classInstance,new object[] {sampleClassTwoTO});
+object result = methodInfo.Invoke(classInstance,new object[] {objectAtHandTOAsObj});
 string json = JsonConvert.SerializeObject(result);
 return json;
 }

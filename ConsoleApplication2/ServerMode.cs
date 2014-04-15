@@ -11,9 +11,10 @@ using System.Web.Http;
 using System.Web.Http.Dispatcher;
 using System.Web.Http.SelfHost;
 using System.Configuration;
-using ConsoleApplication2.Models;
-using ConsoleApplication2.Processor;
-using ConsoleApplication2.Generators;
+using CoreFramework.Models;
+using CoreFramework.Processor;
+using CoreFramework.Generators;
+using CoreFramework.Modes;
 
 
 namespace ConsoleApplication2
@@ -22,37 +23,12 @@ namespace ConsoleApplication2
     {
         static readonly Uri _baseAddress = new Uri("http://localhost:60064");
 
-        public static Assembly generatedAssemblyAtHand;
-
-        public static void doConfigurationAndServerStartup()
-        {
-            Console.WriteLine("In server mode");
-            string dllPath = ConfigurationManager.AppSettings["dllFilePath"];
-            Console.WriteLine("DLL File is : " + dllPath);
-            Models.DLLModel dLLAtHand = null;
-            if (dllPath != null && dllPath.EndsWith(".dll"))
+        public static void doConfigurationAndServerStartup(){
+            if (ServerModeDelegate.doConfiguration())
             {
-                dLLAtHand = new DLLModel(dllPath);
-                dLLAtHand = dLLAtHand.processDll(dLLAtHand);
-            }
-            else
-            {
-                Console.WriteLine("DLL Path information is not properly configured.");
-                Environment.Exit(0);
-            }
-
-            DLLProcessor.populateUserSelectedClassesAndMethods(dLLAtHand);
-            Assembly assemblyAtHand = new ControllerGenerator().generateControllersAndDll(dLLAtHand);
-            if (assemblyAtHand != null)
-            {
-                generatedAssemblyAtHand = assemblyAtHand;
-                dLLAtHand.generateXml();
                 startServer();
-            }
-
-        }
-
-       
+            }            
+        }                        
 
         public static void startServer()
         {
@@ -68,9 +44,6 @@ namespace ConsoleApplication2
                  defaults: new { id = RouteParameter.Optional }
                 );
 
-                DynamicAssemblyResolver assemblyResolver = new DynamicAssemblyResolver();
-                config.Services.Replace(typeof(IAssembliesResolver), assemblyResolver);
-                Console.WriteLine("Passing...%%%%%%%%");
                 // Create server
                 server = new HttpSelfHostServer(config);
                 // Start listening

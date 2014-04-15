@@ -49,6 +49,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="CoreFramework, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\..\..\playdll\CoreFramework.dll</HintPath>
+    </Reference>
     <Reference Include="Newtonsoft.Json">
       <HintPath>..\packages\Newtonsoft.Json.6.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
@@ -78,20 +82,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Generators\ControllerGenerator.cs" />
-    <Compile Include="Models\iModel.cs" />
-    <Compile Include="Processor\DLLProcessor.cs" />
-    <Compile Include="Resolver\DynamicAssemblyResolver.cs" />
-    <Compile Include="Models\ClassModel.cs" />
-    <Compile Include="Models\DLLModel.cs" />
-    <Compile Include="Models\MethodModel.cs" />
-    <Compile Include="Models\ParameterModel.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Compile>
     <Compile Include="ServerMode.cs" />
-    <Compile Include="UserInteraction.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config">
@@ -120,6 +115,7 @@
       <Install>false</Install>
     </BootstrapperPackage>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
